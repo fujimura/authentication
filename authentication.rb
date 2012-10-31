@@ -1,5 +1,5 @@
 class CurrentUserDoesNotExist < StandardError ; end
-class Unauthorized < StandardError; end
+class Unauthenticated < StandardError; end
 
 module Authentication
 
@@ -14,7 +14,7 @@ module Authentication
   # Store user id in session.
   #
   def login!(user)
-    raise Unauthorized unless user
+    raise Unauthenticated unless user
     session[:current_user_id] = user.id
   end
 
