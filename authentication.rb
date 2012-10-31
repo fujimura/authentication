@@ -1,7 +1,7 @@
-class CurrentUserDoesNotExist < StandardError ; end
-class Unauthenticated < StandardError; end
-
 module Authentication
+
+  class CurrentUserDoesNotExist < StandardError ; end
+  class Unauthenticated < StandardError; end
 
   extend ActiveSupport::Concern
 
