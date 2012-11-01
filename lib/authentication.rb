@@ -1,11 +1,10 @@
 module Authentication
 
-  # Expects #session and #find_current_user to be exist.
-
   class Unauthenticated < StandardError; end
 
-  # Store user id in session.
+  # Log in with given object.
   #
+  # @param [Object] user The object you want to store as `current_user`.
   def login!(user)
     raise Unauthenticated unless user
     @current_user = user
@@ -15,7 +14,7 @@ module Authentication
   # Return current_user.
   # If it does not exist, returns nil.
   #
-  # @return user or nil
+  # @return [Object] The object stored as user or nil
   def current_user
     @current_user ||= find_current_user
   end
