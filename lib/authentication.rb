@@ -1,3 +1,5 @@
+require "authentication/version"
+
 module Authentication
 
   class Unauthenticated < StandardError; end
