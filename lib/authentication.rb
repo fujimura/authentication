@@ -2,7 +2,6 @@ module Authentication
 
   # Expects #session and #find_current_user to be exist.
 
-  class CurrentUserDoesNotExist < StandardError ; end
   class Unauthenticated < StandardError; end
 
   # Store user id in session.
