@@ -55,6 +55,21 @@ describe Authentication do
       end
     end
   end
+
+  describe '#current_user_id' do
+    context 'when logged in' do
+      it "should return user_id" do
+        controller.login! user
+        controller.current_user_id.should == user.id
+      end
+    end
+    context 'when not logged in' do
+      it "should return nil" do
+        controller.current_user_id.should == nil
+      end
+    end
+  end
+
   describe '#logged_in?' do
     context 'when logged in' do
       it "should return true" do

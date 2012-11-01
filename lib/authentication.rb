@@ -19,6 +19,14 @@ module Authentication
     @current_user ||= find_current_user
   end
 
+  # Return id of given current_user.
+  # If it does not exist, returns nil.
+  #
+  # @return [Object] The id of object stored as user or nil
+  def current_user_id
+    session[:current_user_id]
+  end
+
   # Return current_user exists or not.
   #
   # @return [Boolean]
