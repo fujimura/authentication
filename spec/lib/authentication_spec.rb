@@ -1,5 +1,4 @@
-require 'rspec'
-require File.expand_path(__FILE__ + './../../lib/authentication')
+require 'spec_helper'
 
 class Controller
   include Authentication
