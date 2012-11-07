@@ -4,12 +4,17 @@
 
 ## How to use
 
-See an [example](https://github.com/fujimura/authentication-rails-example)
+See an [example](https://github.com/fujimura/authentication-rails-example) or [spec](https://github.com/fujimura/authentication/blob/master/spec/authentication_spec.rb)
 
 ## Requirements
 
 * Included class should have a method called `find_current_user` which returns the user object.
 * Included class should have a method called `session` method which returns Hash-like object.
+
+## Side-effects
+
+* ```session[:current_user_id]``` in included module will be changed.
+* ```@current_user``` in included module will be changed.
 
 ## Goal
 
