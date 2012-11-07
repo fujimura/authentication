@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.summary        = %q{Minimalist authentication library for Ruby}
   gem.homepage      = "https://github.com/fujimura/authentication"
 
-  #gem.rubyforge_project = "authentication"
+  gem.rubyforge_project = "authentication"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
