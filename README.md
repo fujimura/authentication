@@ -2,6 +2,14 @@
 
 ## Minimalist authentication library for Ruby
 
+## Install
+
+```
+$ gem install authentication
+```
+
+or add ```gem 'authentication'``` to your Gemfile.
+
 ## How to use
 
 See an [example](https://github.com/fujimura/authentication-rails-example) or [spec](https://github.com/fujimura/authentication/blob/master/spec/authentication_spec.rb)
