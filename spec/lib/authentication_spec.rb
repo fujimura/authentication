@@ -8,7 +8,7 @@ class Controller
     self.session = {}
   end
 
-  def find_current_user success = true
+  def find_current_user
     if session[:current_user_id]
       true
     else
