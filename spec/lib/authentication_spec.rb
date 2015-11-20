@@ -44,13 +44,13 @@ describe Authentication do
     context 'when logged in' do
       it "should return user" do
         controller.login! user
-        controller.current_user.should == user
+        expect(controller.current_user).to eq user
       end
     end
     context 'when not logged in' do
       it "should call #find_current_user and return its result" do
-        controller.should_receive(:find_current_user).and_return "something"
-        controller.current_user.should == "something"
+        expect(controller).to receive(:find_current_user).and_return "something"
+        expect(controller.current_user). to eq "something"
       end
     end
   end
@@ -59,12 +59,12 @@ describe Authentication do
     context 'when logged in' do
       it "should return user_id" do
         controller.login! user
-        controller.current_user_id.should == user.id
+        expect(controller.current_user_id).to eq user.id
       end
     end
     context 'when not logged in' do
       it "should return nil" do
-        controller.current_user_id.should == nil
+        expect(controller.current_user_id).to eq nil
       end
     end
   end
@@ -73,7 +73,7 @@ describe Authentication do
     context 'when logged in' do
       it "should return true" do
         controller.login! user
-        controller.logged_in?.should == true
+        expect(controller).to be_logged_in
       end
     end
   end
@@ -83,8 +83,8 @@ describe Authentication do
       it "should set current_user to nil" do
         controller.login! user
         controller.logout!
-        controller.current_user.should == nil
-        controller.session[:current_user_id].should == nil
+        expect(controller.current_user).to eq nil
+        expect(controller.session[:current_user_id]).to eq nil
       end
     end
   end
