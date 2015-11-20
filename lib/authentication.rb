@@ -12,6 +12,10 @@ module Authentication
   end
 
   def authenticator
-    @__authenticator ||= Authentication::Authenticator.new(session: session, finder: -> { find_current_user })
+    @__authenticator ||= Authentication::Authenticator.new(
+      session: session,
+      session_key: :current_user_id,
+      finder: -> { find_current_user }
+    )
   end
 end
