@@ -1,11 +1,20 @@
 module Authentication
+  # A object to authenticate client.
+  # @since 0.0.2
   class Authenticator
+    # @param [Hash] options the options to create a authenticator with.
+    # @option options [Hash] :session Hash-like session object.
+    # @option options [Symbol] :session_key Key of session_id.
+    # @option options [Proc] :finder A proc which returns client to authenticate.
     def initialize(options)
       @session = options.fetch :session
       @session_key = options.fetch :session_key
       @finder = options.fetch :finder
     end
 
+    # Set current_client.
+    #
+    # @raise [Unauthenticated] Raised when given client doesn't exist.
     def login!(client)
       raise Unauthenticated unless client
       @current_client = client
