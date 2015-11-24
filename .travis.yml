@@ -1,5 +1,10 @@
 language: ruby
 rvm:
   - 1.9.3
-  - jruby-19mode # JRuby in 1.9 mode
+  - 2.0.0
+  - 2.1
+  - 2.2
+  - jruby-19mode
   - rbx-19mode
+
+sudo: false

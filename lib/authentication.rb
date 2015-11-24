@@ -1,45 +1,30 @@
 require "authentication/version"
+require "authentication/authenticator"
 
+# Top-level namespace of this library, also works as a convenient module to supply authentication-related methods for Rails controller etc.
+#
+# By including this, the class will have methods like "login!" or "current_user!". See method list for the documentation of Authenticator.
+#
+# To find current_user, this module uses "find_current_user" method defined in included module to find current user, and "current_user_id" as the session key.
 module Authentication
-
+  # Raised when authentication was failed.
   class Unauthenticated < StandardError; end
 
-  # Log in with given object.
-  #
-  # @param [Object] user The object you want to store as `current_user`.
-  def login!(user)
-    raise Unauthenticated unless user
-    @current_user = user
-    session[:current_user_id] = user.id
+  def self.included(base)
+    base.class_eval do
+      extend Forwardable
+      def_delegators :current_user_authenticator, :login!, :current_user, :current_user_id, :logged_in?, :logout!
+    end
   end
 
-  # Return current_user.
-  # If it does not exist, returns nil.
+  # Return authenticator for current_user.
   #
-  # @return [Object] The object stored as user or nil
-  def current_user
-    @current_user ||= find_current_user
-  end
-
-  # Return id of given current_user.
-  # If it does not exist, returns nil.
-  #
-  # @return [Object] The id of object stored as user or nil
-  def current_user_id
-    session[:current_user_id]
-  end
-
-  # Return current_user exists or not.
-  #
-  # @return [Boolean]
-  def logged_in?
-    not current_user.nil?
-  end
-
-  # Delete current_user from database and session.
-  #
-  def logout!
-    return unless current_user
-    @current_user = session[:current_user_id] = nil
+  # @return [Authentication::Authenticator]
+  def current_user_authenticator
+    @__authenticator ||= Authentication::Authenticator.new(
+      session: session,
+      session_key: :current_user_id,
+      finder: -> { find_current_user }
+    )
   end
 end
