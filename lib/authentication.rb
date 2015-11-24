@@ -7,11 +7,14 @@ module Authentication
   def self.included(base)
     base.class_eval do
       extend Forwardable
-      def_delegators :authenticator, :login!, :current_user, :current_user_id, :logged_in?, :logout!
+      def_delegators :current_user_authenticator, :login!, :current_user, :current_user_id, :logged_in?, :logout!
     end
   end
 
-  def authenticator
+  # Return authenticator for `current_user`.
+  #
+  # @return [Authentication::Authenticator]
+  def current_user_authenticator
     @__authenticator ||= Authentication::Authenticator.new(
       session: session,
       session_key: :current_user_id,
