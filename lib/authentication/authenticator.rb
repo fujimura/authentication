@@ -6,40 +6,42 @@ module Authentication
       @finder = options.fetch :finder
     end
 
-    def login!(user)
-      raise Unauthenticated unless user
-      @current_user = user
-      @session[@session_key] = user.id
+    def login!(client)
+      raise Unauthenticated unless client
+      @current_client = client
+      @session[@session_key] = client.id
     end
 
-    # Return current_user.
+    # Return current_client.
     # If it does not exist, returns nil.
     #
-    # @return [Object] The object stored as user or nil
-    def current_user
-      @current_user ||= @finder.call
+    # @return [Object] The object stored as client or nil
+    def current_client
+      @current_client ||= @finder.call
     end
+    alias current_user current_client
 
-    # Return id of given current_user.
+    # Return id of given current_client.
     # If it does not exist, returns nil.
     #
-    # @return [Object] The id of object stored as user or nil
-    def current_user_id
+    # @return [Object] The id of object stored as client or nil
+    def current_client_id
       @session[@session_key]
     end
+    alias current_user_id current_client_id
 
-    # Return current_user exists or not.
+    # Return current_client exists or not.
     #
     # @return [Boolean]
     def logged_in?
-      not current_user.nil?
+      not current_client.nil?
     end
 
-    # Delete current_user from database and session.
+    # Delete current_client from database and session.
     #
     def logout!
-      return unless current_user
-      @current_user = @session[@session_key] = nil
+      return unless current_client
+      @current_client = @session[@session_key] = nil
     end
   end
 end
