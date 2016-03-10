@@ -10,6 +10,8 @@ module Authentication
       @session = options.fetch :session
       @session_key = options.fetch :session_key
       @finder = options.fetch :finder
+      @after_login_callback = options[:after_login_callback]
+      @after_logout_callback = options[:after_logout_callback]
     end
 
     # Set current_client.
@@ -19,6 +21,7 @@ module Authentication
       raise Unauthenticated unless client
       @current_client = client
       @session[@session_key] = client.id
+      invoke_after_login_callback!
     end
 
     # Return current_client.
@@ -51,6 +54,17 @@ module Authentication
     def logout!
       return unless current_client
       @current_client = @session[@session_key] = nil
+      invoke_after_logout_callback!
+    end
+
+    private
+
+    def invoke_after_login_callback!
+      @after_login_callback && @after_login_callback.call
+    end
+
+    def invoke_after_logout_callback!
+      @after_logout_callback && @after_logout_callback.call
     end
   end
 end

@@ -5,6 +5,12 @@ class Controller
   include Authentication
   attr_accessor :session
 
+  def after_login
+  end
+
+  def after_logout
+  end
+
   def initialize
     self.session = {}
   end
@@ -28,6 +34,10 @@ describe Authentication do
         controller.login! user
         expect(controller.current_user).to eq user
       end
+
+      it "should invoke after_login callback" do
+        expect(controller).to receive(:after_login)
+        controller.login! user
       end
     end
 
@@ -85,6 +95,12 @@ describe Authentication do
         controller.logout!
         expect(controller.current_user).to eq nil
         expect(controller.session[:current_user_id]).to eq nil
+      end
+
+      it "should invoke after_logout callback" do
+        expect(controller).to receive(:after_logout)
+        controller.login! user
+        controller.logout!
       end
     end
   end
