@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ostruct'
 
 class Controller
   include Authentication
@@ -17,20 +18,19 @@ class Controller
   end
 end
 
-class User
-  def initialize(attributes)
-    @attributes = attributes
-  end
-  def id
-    @attributes[:id]
-  end
-end
-
 describe Authentication do
   let(:controller) { Controller.new }
-  let(:user)       { User.new(id: 300) }
+  let(:user)       { OpenStruct.new(id: rand(100)) }
 
   describe '#login!' do
+    context 'with client' do
+      it "should set current user" do
+        controller.login! user
+        expect(controller.current_user).to eq user
+      end
+      end
+    end
+
     context 'with nil' do
       it "should raise Unauthenticated" do
         expect do
