@@ -5,12 +5,6 @@ class Controller
   include Authentication
   attr_accessor :session
 
-  def after_login
-  end
-
-  def after_logout
-  end
-
   def initialize
     self.session = {}
   end
@@ -21,6 +15,14 @@ class Controller
     else
       nil
     end
+  end
+
+  private
+
+  def after_login
+  end
+
+  def after_logout
   end
 end
 
