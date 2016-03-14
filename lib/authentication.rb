@@ -24,7 +24,9 @@ module Authentication
     @__authenticator ||= Authentication::Authenticator.new(
       session: session,
       session_key: :current_user_id,
-      finder: -> { find_current_user }
+      finder: -> { find_current_user },
+      after_login_callback: -> { self.respond_to?(:after_login, true) && after_login },
+      after_logout_callback: -> { self.respond_to?(:after_logout, true) && after_logout }
     )
   end
 end

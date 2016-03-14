@@ -18,6 +18,8 @@ or add ```gem 'authentication'``` to your Gemfile.
   - `#login!` and `#logout!` to log in/out.
   - `#current_user` and `#current_user_id` to get current user or its id.
   - `#logged_in?` to ask logged in or not.
+  - `#after_login` will be invoked after `#login!`.
+  - `#after_logout` will be invoked after `#logout!`.
 
 [Example](https://github.com/fujimura/authentication_rails_example) and [spec](https://github.com/fujimura/authentication/blob/master/spec/lib/authentication_spec.rb) might be also helpful.
 

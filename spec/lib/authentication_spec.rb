@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ostruct'
 
 class Controller
   include Authentication
@@ -15,22 +16,33 @@ class Controller
       nil
     end
   end
-end
 
-class User
-  def initialize(attributes)
-    @attributes = attributes
+  private
+
+  def after_login
   end
-  def id
-    @attributes[:id]
+
+  def after_logout
   end
 end
 
 describe Authentication do
   let(:controller) { Controller.new }
-  let(:user)       { User.new(id: 300) }
+  let(:user)       { OpenStruct.new(id: rand(100)) }
 
   describe '#login!' do
+    context 'with client' do
+      it "should set current user" do
+        controller.login! user
+        expect(controller.current_user).to eq user
+      end
+
+      it "should invoke after_login callback" do
+        expect(controller).to receive(:after_login)
+        controller.login! user
+      end
+    end
+
     context 'with nil' do
       it "should raise Unauthenticated" do
         expect do
@@ -85,6 +97,12 @@ describe Authentication do
         controller.logout!
         expect(controller.current_user).to eq nil
         expect(controller.session[:current_user_id]).to eq nil
+      end
+
+      it "should invoke after_logout callback" do
+        expect(controller).to receive(:after_logout)
+        controller.login! user
+        controller.logout!
       end
     end
   end
